@@ -3,8 +3,10 @@ import { useForm } from "~hooks/form"
 const InputArea = () => {
   const { handleSubmit, deleteAllBorderPageColorizers } = useForm()
   return (
-    <div className="w-full flex items-center gap-5">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+    <div className="w-full flex flex-row gap-5 items-center">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-row items-center gap-5">
         <div>
           <label
             className="block text-gray-700 text-sm font-bold mb-2"

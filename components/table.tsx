@@ -4,31 +4,28 @@ const Table: React.FC = () => {
   const { borderPageColorizerStorage } = useStorage()
 
   return (
-    <table className="table-auto border-collapse w-full text-lg">
-      <thead>
+    <table className="table-auto border-collapse w-full text-base">
+      <thead className="text-gray-700 uppercase">
         <tr>
-          <th>Domain Name</th>
-          <th>Border Color</th>
+          <th className="table-th">Domain Name</th>
+          <th className="table-th">Border Color</th>
         </tr>
       </thead>
-      <tbody className="bg-white dark:bg-slate-800">
+      <tbody className="bg-white text-left">
         {borderPageColorizerStorage.length > 0 ? (
           borderPageColorizerStorage.map((item) => (
-            <tr key={item.no}>
-              <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                {item.domainName}
-              </td>
-              <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
+            <tr key={item.no} className="tbody-tr">
+              <td className="table-td">{item.domainName}</td>
+              <td className="table-td">
+                <input type="color" value={item.color} disabled />
+                <br />
                 {item.color}
               </td>
             </tr>
           ))
         ) : (
-          <tr>
-            <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-              N/A
-            </td>
-            <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
+          <tr className="tbody-tr">
+            <td className="table-td" colSpan={3}>
               N/A
             </td>
           </tr>

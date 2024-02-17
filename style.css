@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.remove-btn {
+  @apply bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-700;
+}
+
+.table-th {
+  @apply border-b font-medium p-4 pl-8 pt-0 pb-3 text-left;
+}
+
+.table-td {
+  @apply p-4 pl-8;
+}
+
+.tbody-tr {
+  @apply bg-white border-b;
+}
