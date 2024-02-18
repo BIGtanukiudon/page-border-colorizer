@@ -9,7 +9,8 @@ export default defineConfig({
       "~components": path.resolve(__dirname, "components"),
       "~hooks": path.resolve(__dirname, "hooks"),
       "~models": path.resolve(__dirname, "models"),
-      "~storage": path.resolve(__dirname, "storage")
+      "~storage": path.resolve(__dirname, "storage"),
+      "~utils": path.resolve(__dirname, "utils")
     },
     globals: true,
     environment: "jsdom"

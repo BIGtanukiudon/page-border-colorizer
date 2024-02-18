@@ -1,7 +1,14 @@
 import { useForm } from "~hooks/form"
 
 const InputArea = () => {
-  const { handleSubmit, deleteAllBorderPageColorizers } = useForm()
+  const {
+    handleSubmit,
+    domainNameErrorMessages,
+    setDomainNameErrorMessages,
+    colorErrorMessages,
+    setColorErrorMessages
+  } = useForm()
+
   return (
     <div className="w-full flex flex-row gap-10 items-center">
       <form
@@ -20,7 +27,15 @@ const InputArea = () => {
             type="text"
             placeholder="example.com"
             defaultValue=""
+            onChange={() => {
+              setDomainNameErrorMessages("")
+            }}
           />
+          {domainNameErrorMessages && (
+            <p className="text-red-500 text-base italic">
+              {domainNameErrorMessages}
+            </p>
+          )}
         </div>
 
         <div>
@@ -30,12 +45,27 @@ const InputArea = () => {
             Border Color
           </label>
 
-          <input id="color-picker" name="color" type="color" defaultValue="" />
+          <input
+            id="color-picker"
+            name="color"
+            type="color"
+            defaultValue=""
+            onChange={() => {
+              setColorErrorMessages("")
+            }}
+          />
+
+          {colorErrorMessages && (
+            <p className="text-red-500 text-base italic">
+              {colorErrorMessages}
+            </p>
+          )}
         </div>
 
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-500"
+          disabled={!!domainNameErrorMessages || !!colorErrorMessages}>
           Add
         </button>
       </form>
