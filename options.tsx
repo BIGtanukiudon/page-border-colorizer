@@ -5,12 +5,16 @@ import Table from "~components/table"
 
 const OptionsIndex = () => {
   return (
-    <div className="p-10">
+    <div className="flex flex-col gap-10 p-10">
       <h1 className="text-2xl">Page Border Colorizer</h1>
 
-      <InputArea />
+      <div>
+        <InputArea />
+      </div>
 
-      <Table />
+      <div>
+        <Table />
+      </div>
     </div>
   )
 }
