@@ -1,34 +1,41 @@
 import { useStorage } from "~hooks/storage"
 
 const Table: React.FC = () => {
-  const { borderPageColorizerStorage } = useStorage()
+  const { borderPageColorizerStorage, deleteBorderPageColorizer } = useStorage()
 
   return (
-    <table className="table-auto border-collapse w-full text-lg">
-      <thead>
-        <tr>
-          <th>Domain Name</th>
-          <th>Border Color</th>
+    <table className="table-auto border-collapse w-full text-base">
+      <thead className="flex text-gray-700 uppercase border-t bg-slate-200 w-full">
+        <tr className="tr-flex">
+          <th className="table-th w-2/4">Domain Name</th>
+          <th className="table-th w-1/4">Border Color</th>
+          <th className="table-th w-1/4"></th>
         </tr>
       </thead>
-      <tbody className="bg-white dark:bg-slate-800">
+      <tbody
+        className="bg-white text-left flex flex-col items-center justify-between overflow-y-scroll w-full "
+        style={{ maxHeight: "70vh" }}>
         {borderPageColorizerStorage.length > 0 ? (
           borderPageColorizerStorage.map((item) => (
-            <tr key={item.no}>
-              <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                {item.domainName}
-              </td>
-              <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
+            <tr key={item.no} className="tbody-tr tr-flex">
+              <td className="table-td w-2/4">{item.domainName}</td>
+              <td className="table-td w-1/4">
+                <input type="color" value={item.color} disabled />
+                <br />
                 {item.color}
+              </td>
+              <td className="table-td w-1/4">
+                <button
+                  onClick={() => deleteBorderPageColorizer(item.no)}
+                  className="remove-btn">
+                  Remove
+                </button>
               </td>
             </tr>
           ))
         ) : (
-          <tr>
-            <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-              N/A
-            </td>
-            <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
+          <tr className="tbody-tr tr-flex">
+            <td className="table-td" colSpan={3}>
               N/A
             </td>
           </tr>

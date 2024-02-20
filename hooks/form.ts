@@ -1,7 +1,8 @@
-import { useCallback, type FormEventHandler } from "react"
+import { useCallback, useState, type FormEventHandler } from "react"
 
 import { useStorage } from "~hooks/storage"
 import type { BorderPageColorizerProps } from "~models"
+import { isHostname } from "~utils/form"
 
 type UseForm = {
   handleSubmit: FormEventHandler<HTMLFormElement>
@@ -11,9 +12,17 @@ type UseForm = {
     domainName: string,
     color: string
   ) => void
+  domainNameErrorMessages: string
+  colorErrorMessages: string
+  setDomainNameErrorMessages: (value: string) => void
+  setColorErrorMessages: (value: string) => void
 }
 
 export const useForm = (): UseForm => {
+  const [domainNameErrorMessages, setDomainNameErrorMessages] =
+    useState<string>("")
+  const [colorErrorMessages, setColorErrorMessages] = useState<string>("")
+
   const {
     borderPageColorizerStorage,
     setBorderPageColorizer,
@@ -28,11 +37,22 @@ export const useForm = (): UseForm => {
       const domainName = form.get("domain-name")?.toString()
       const color = form.get("color")?.toString()
 
-      if (domainName != null && color != null) {
-        await setBorderPageColorizer(
-          generateNewProps(borderPageColorizerStorage, domainName, color)
-        )
+      if (!domainName) {
+        setDomainNameErrorMessages("Domain Name is required")
+        return
+      } else if (!isHostname(domainName)) {
+        setDomainNameErrorMessages("Invalid Domain Name")
+        return
       }
+
+      if (!color) {
+        setColorErrorMessages("Color is required")
+        return
+      }
+
+      await setBorderPageColorizer(
+        generateNewProps(borderPageColorizerStorage, domainName, color)
+      )
     },
     [borderPageColorizerStorage]
   )
@@ -68,6 +88,10 @@ export const useForm = (): UseForm => {
   return {
     handleSubmit,
     deleteAllBorderPageColorizers,
-    generateNewProps
+    generateNewProps,
+    domainNameErrorMessages,
+    colorErrorMessages,
+    setDomainNameErrorMessages,
+    setColorErrorMessages
   }
 }

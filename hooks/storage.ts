@@ -10,11 +10,12 @@ type UseStorage = {
   borderPageColorizerStorage: BorderPageColorizerProps[]
   setBorderPageColorizer: (setter: BorderPageColorizerProps[]) => Promise<void>
   deleteAllBorderPageColorizers: () => void
+  deleteBorderPageColorizer: (no: number) => Promise<void>
 }
 
 export const useStorage = (): UseStorage => {
   const [borderPageColorizerStorage, setBorderPageColorizerStorage] =
-    usePlasmohqStorage(
+    usePlasmohqStorage<BorderPageColorizerProps[]>(
       {
         key: STORAGE_KEY,
         instance: new Storage({
@@ -25,14 +26,23 @@ export const useStorage = (): UseStorage => {
     )
 
   const setBorderPageColorizer = useCallback(
-    (setter: BorderPageColorizerProps[]) =>
-      setBorderPageColorizerStorage(setter),
+    async (setter: BorderPageColorizerProps[]) =>
+      await setBorderPageColorizerStorage(setter),
     []
+  )
+
+  const deleteBorderPageColorizer = useCallback(
+    async (no: number) =>
+      await setBorderPageColorizer(
+        borderPageColorizerStorage.filter((item) => item.no !== no)
+      ),
+    [borderPageColorizerStorage]
   )
 
   return {
     borderPageColorizerStorage,
     setBorderPageColorizer,
-    deleteAllBorderPageColorizers: () => setBorderPageColorizerStorage([])
+    deleteAllBorderPageColorizers: () => setBorderPageColorizerStorage([]),
+    deleteBorderPageColorizer
   }
 }
